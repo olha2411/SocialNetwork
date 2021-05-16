@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="Friendship.cs" />
     <Compile Include="LoggedUser.cs" />
+    <Compile Include="Relations.cs" />
     <Compile Include="UnLoggedUser.cs" />
     <Compile Include="User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -8,6 +8,7 @@ namespace SocialNetwork
     {
         static void Main(string[] args)
         {
+
             List<LoggedUser> RegisteredUsers = new List<LoggedUser>()
             {
             new LoggedUser() { Id = 1, Name = "Tom King" },
@@ -37,7 +38,7 @@ namespace SocialNetwork
                 new Friendship(){ IdSender = 4, IdRecipient = 9, RelationsStatus = "friend"},
             };
 
-            Console.WriteLine("Welcome!");
+            Console.WriteLine("Welcome in a SocialNetwork! Choose a command to start");
             LoggedUser LoggedUser = new LoggedUser() { Id = 0, Name = "Name" };
 
             bool alive = true;
@@ -65,7 +66,7 @@ namespace SocialNetwork
                             LoggedUser = LogIn(LoggedUser, RegisteredUsers);
                             break;
                         case 3:
-                            ShowUserFriends(LoggedUser, RelationList, LoggedUser.Id, RegisteredUsers);
+                            ShowUserFriends(LoggedUser, RelationList, RegisteredUsers);
                             break;
                         case 4:
                             SendInvitation(LoggedUser, RelationList, RegisteredUsers);
@@ -98,8 +99,8 @@ namespace SocialNetwork
 
             string g = Convert.ToBase64String(Guid.NewGuid().ToByteArray());
             Console.WriteLine(g);
+        }       
 
 
-        }
     }
 }

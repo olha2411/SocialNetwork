@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SocialNetworkLib
 {
-    public class LoggedUser:User
+    public class LoggedUser : User
     {
         public override List<LoggedUser> ShowUsers(List<LoggedUser> RegisteredUsers, int LoggedUserId)
         {
@@ -32,60 +32,27 @@ namespace SocialNetworkLib
             {
                 if (user.Id == IdReciver)
                 {
-                    foreach (Friendship friend in RelationList)
-                    {
-                        if (friend.IdRecipient == IdUser && friend.IdSender == IdReciver && friend.RelationsStatus == "pending")
-                        {
-                            throw new WrongInvitationException($"{user.Name} has sent you invitation. You can accept it");
-                        }
-                        else if (friend.IdRecipient == IdReciver && friend.IdSender == IdUser && friend.RelationsStatus == "pending")
-                        {
-                            throw new WrongInvitationException($"The invitation to {user.Name} is already sent");
-                        }
-                        else if (friend.IdRecipient == IdReciver && friend.RelationsStatus == "friend")
-                        {
-                            throw new WrongInvitationException($"{user.Name} is already your friend");
-                        }
-                    }
+                    Relations relations = new Relations(RelationList);
+                    relations.IsRelation(IdUser, IdReciver, user.Name);
                     exist = true;
                     RelationList.Add(new Friendship() { IdSender = IdUser, IdRecipient = IdReciver, RelationsStatus = "pending" });
                     Friend = user.Name;
                 }
             }
-
             if (exist == false)
             {
                 throw new ArgumentNullException("This user is not registered");
             }
             return Friend;
 
-
         }
 
         public List<Friendship> GetUserFriends(List<Friendship> RelationList, int IdUser)
         {
-            List<Friendship> UserFriends = new List<Friendship>();
-            foreach (Friendship friend in RelationList)
-            {
-                if (friend.IdSender == IdUser | friend.IdRecipient == IdUser)
-                {
-                    UserFriends.Add(new Friendship() { IdSender = friend.IdSender, IdRecipient = friend.IdRecipient, RelationsStatus = friend.RelationsStatus });
-                }
-            }
-            List<Friendship> friends = new List<Friendship>();
-            foreach (Friendship f in UserFriends)
-            {
-                if (f.IdSender != IdUser)
-                {
-                    friends.Add(new Friendship() { IdSender = f.IdSender, RelationsStatus = f.RelationsStatus });
-                }
-                else
-                {
-                    friends.Add(new Friendship() { IdRecipient = f.IdRecipient, RelationsStatus = f.RelationsStatus });
-                }
-            }
+            Relations relations = new Relations(RelationList);
+            List<Friendship> UserFriends = relations.GetFriends(IdUser);
 
-            return friends;
+            return UserFriends;
         }
 
         public List<Friendship> GetUserInvitations(List<Friendship> RelationList, int IdLoggedUser)
@@ -94,7 +61,7 @@ namespace SocialNetworkLib
 
             foreach (Friendship user in RelationList)
             {
-                if ((user.IdRecipient == IdLoggedUser && user.RelationsStatus != "declined" && user.RelationsStatus != "friend"))
+                if ((user.IdRecipient == IdLoggedUser && user.RelationsStatus != "declined" && user.IsStatusFriends() == false))// user.RelationsStatus != "friend"
                 {
                     UserInvitations.Add(new Friendship { IdSender = user.IdSender, RelationsStatus = "invitation to be friends" });
 
@@ -115,11 +82,12 @@ namespace SocialNetworkLib
 
         public LoggedUser Accept(List<LoggedUser> RegisteredUsers, LoggedUser loggedUser, int SenderId, List<Friendship> RelationList)
         {
+
             LoggedUser NewFriend = new LoggedUser();
             bool InvitationExist = false;
             foreach (Friendship Inv in RelationList)
             {
-                if (SenderId == Inv.IdSender)
+                if (SenderId == Inv.IdSender && loggedUser.Id == Inv.IdRecipient)
                 {
                     if (NewFriend != null)
                     {
@@ -128,10 +96,10 @@ namespace SocialNetworkLib
                         InvitationExist = true;
                     }
                 }
-                else if (InvitationExist == false)
-                {
-                    throw new ArgumentException("This user haven't sent you invitation");
-                }
+            }
+            if (InvitationExist == false)
+            {
+                throw new ArgumentException("This user haven't sent you invitation");
             }
             NewFriend = FindName(RegisteredUsers, NewFriend);
             return NewFriend;
@@ -147,21 +115,21 @@ namespace SocialNetworkLib
             foreach (Friendship Inv in RelationList)
             {
 
-                if (SenderId == Inv.IdSender)
+                if (SenderId == Inv.IdSender && loggedUser.Id == Inv.IdRecipient)
                 {
                     PossibleFriend = new LoggedUser() { Id = Inv.IdSender };
                     Inv.RelationsStatus = "declined";
+                    InvitationExist = true;
                 }
             }
             if (InvitationExist == false)
             {
                 throw new ArgumentException("This user haven't sent you invitation");
             }
-            else
-            {
-                PossibleFriend = FindName(RegisteredUsers, PossibleFriend);
-                return PossibleFriend;
-            }
+
+            PossibleFriend = FindName(RegisteredUsers, PossibleFriend);
+            return PossibleFriend;
+
 
         }
         private LoggedUser FindName(List<LoggedUser> RegisteredUsers, LoggedUser NewFriend)
@@ -181,6 +149,5 @@ namespace SocialNetworkLib
             loggedUser.Name = "NoName";
             return loggedUser;
         }
-
     }
 }

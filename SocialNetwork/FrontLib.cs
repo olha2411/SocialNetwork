@@ -41,17 +41,18 @@ namespace SocialNetwork
         }
 
 
-        public static void ShowUserFriends(LoggedUser LoggedUser, List<Friendship> RelationList, int IdUser, List<LoggedUser> RegisteredUsers)
+        public static void ShowUserFriends(LoggedUser LoggedUser, List<Friendship> RelationList, List<LoggedUser> RegisteredUsers)
         {
             if (LoggedUser.Id != 0)
             {
-                List<Friendship> UserFriends = LoggedUser.GetUserFriends(RelationList, IdUser);
+                List<Friendship> UserFriends = LoggedUser.GetUserFriends(RelationList, LoggedUser.Id);
                 if (UserFriends.Count != 0)
                 {
                     foreach (Friendship f in UserFriends)
                     {
                         foreach (LoggedUser U in RegisteredUsers)
                         {
+
                             if ((U.Id == f.IdSender | U.Id == f.IdRecipient) && f.RelationsStatus == "friend")
                             {
                                 Console.WriteLine($"{U.Name} is your {f.RelationsStatus}");
@@ -82,16 +83,16 @@ namespace SocialNetwork
                 try
                 {
                     Console.WriteLine("Enter the Id(name) of user you want to send invitation:");
-                    string name = Console.ReadLine();
+                    /*string name = Console.ReadLine();
                     int IdReceiver = 0;
-                    foreach (LoggedUser u in RegisteredUsers)
+                   foreach (LoggedUser u in RegisteredUsers)
                     {
-                        if (u.Name == name)
+                        if(u.Name == name)
                         {
                             IdReceiver = u.Id;
                         }
-                    }
-                    //int IdReceiver = int.Parse(Console.ReadLine());
+                    }*/
+                    int IdReceiver = int.Parse(Console.ReadLine());
                     if (IdReceiver != LoggedUser.Id)
                     {
                         string Friend = LoggedUser.AddFriend(RelationList, RegisteredUsers, LoggedUser.Id, IdReceiver);

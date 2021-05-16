@@ -11,5 +11,23 @@ namespace SocialNetworkLib
         public int IdSender { get; set; }
         public int IdRecipient { get; set; }
         public string RelationsStatus { get; set; }
+
+        public Dictionary<int, string> Relations = new Dictionary<int, string>(3);//???
+
+        public string GetStatusText()
+        {
+            return RelationsStatus;
+        }
+        public bool IsStatusFriends()
+        {
+            if (RelationsStatus == "friend")
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }
