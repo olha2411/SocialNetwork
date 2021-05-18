@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace SocialNetwork
 {
-    class Program:FrontLib
+    class Program : FrontLib
     {
         static void Main(string[] args)
         {
@@ -39,7 +39,7 @@ namespace SocialNetwork
             };
 
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine(" Welcome to a SocialNetwork! \n Choose a command to start");
+            Console.WriteLine("\n Welcome to a SocialNetwork! \n\n Choose a command to start:");
             LoggedUser LoggedUser = new LoggedUser() { Id = 0, Name = "Name" };
 
             bool alive = true;
@@ -58,6 +58,10 @@ namespace SocialNetwork
                 {
                     int command = int.Parse(Console.ReadLine());
                     Console.WriteLine("");
+                    if(command > 8 | command < 1)
+                    {
+                        Console.WriteLine("There is no such command");
+                    }
                     switch (command)
                     {
                         case 1:

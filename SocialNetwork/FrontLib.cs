@@ -65,7 +65,7 @@ namespace SocialNetwork
             {
                 try
                 {
-                    Console.WriteLine("Enter the Id(name) of user you want to send invitation:");
+                    Console.WriteLine("Enter the name of user you want to send invitation:");
                     string name = Console.ReadLine();
                     int ReceiverId = LoggedUser.GetId(RegisteredUsers, name);
 
@@ -104,7 +104,7 @@ namespace SocialNetwork
                         {
                             if (inv.IdSender == user.Id)
                             {
-                                Console.WriteLine($"{inv.IdSender}\t {user.Name} send you {inv.RelationsStatus}");
+                                Console.WriteLine($"\t {user.Name} send you {inv.RelationsStatus}");
                             }
                         }
                     }
@@ -160,7 +160,7 @@ namespace SocialNetwork
             {
                 Console.WriteLine("Your invitations");
                 ShowUserInvitations(loggeduser, RegisteredUsers, RelationList);
-                Console.WriteLine("Enter the Id(name) of user to accept his/her invitation:");
+                Console.WriteLine("Enter the name of user to accept his/her invitation:");
                 string name = Console.ReadLine();
                 int InvitationId = loggeduser.GetId(RegisteredUsers, name);
                 //int InvitationId = int.Parse(Console.ReadLine());
@@ -180,7 +180,7 @@ namespace SocialNetwork
             {
                 Console.WriteLine("Your invitations");
                 ShowUserInvitations(loggeduser, RegisteredUsers, RelationList);
-                Console.WriteLine("Enter the Id(name) of user to decline invitation:");
+                Console.WriteLine("Enter the name of user to decline invitation:");
                 string name = Console.ReadLine();
                 int InvitationId = loggeduser.GetId(RegisteredUsers, name);
                 //int InvitationId = int.Parse(Console.ReadLine());

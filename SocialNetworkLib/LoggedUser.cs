@@ -48,7 +48,6 @@ namespace SocialNetworkLib
         }
 
 
-
         public List<Friendship> GetUserInvitations(List<Friendship> RelationList, int IdLoggedUser)
         {
 
