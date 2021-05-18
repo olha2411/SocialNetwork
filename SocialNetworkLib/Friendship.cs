@@ -12,8 +12,6 @@ namespace SocialNetworkLib
         public int IdRecipient { get; set; }
         public string RelationsStatus { get; set; }
 
-        public Dictionary<int, string> Relations = new Dictionary<int, string>(3);//???
-
         public string GetStatusText()
         {
             return RelationsStatus;

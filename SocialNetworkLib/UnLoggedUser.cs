@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SocialNetworkLib
 {
-    public class UnLoggedUser:User
+    public class UnLoggedUser : User
     {
         public UnLoggedUser(int Id, string Name) : base()
         {

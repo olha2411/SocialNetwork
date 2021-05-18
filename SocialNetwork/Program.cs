@@ -38,7 +38,8 @@ namespace SocialNetwork
                 new Friendship(){ IdSender = 4, IdRecipient = 9, RelationsStatus = "friend"},
             };
 
-            Console.WriteLine("Welcome in a SocialNetwork! Choose a command to start");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine(" Welcome to a SocialNetwork! \n Choose a command to start");
             LoggedUser LoggedUser = new LoggedUser() { Id = 0, Name = "Name" };
 
             bool alive = true;
@@ -47,16 +48,16 @@ namespace SocialNetwork
                 ConsoleColor color = Console.ForegroundColor;
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine("");
-                Console.WriteLine("\t 1. Show registered users \n\t 2. Log in \n\t 3. Show my friends \n\t 4. Add friend(send invitation)");
-                Console.WriteLine("\t 5. Show my invitations \n\t 6. Process invitations \n\t 7. Log out");
-                Console.WriteLine("\t 8. Stop working in social network");
+                Console.WriteLine("\t 1 - Show registered users \n\t 2 - Log in \n\t 3 - Show my friends \n\t 4 - Add friend(send invitation)");
+                Console.WriteLine("\t 5 - Show my invitations \n\t 6 - Process invitations \n\t 7 - Log out");
+                Console.WriteLine("\t 8 - Stop working in social network");
                 Console.WriteLine("");
                 Console.WriteLine("Enter number of command:");
                 Console.ForegroundColor = color;
                 try
                 {
                     int command = int.Parse(Console.ReadLine());
-
+                    Console.WriteLine("");
                     switch (command)
                     {
                         case 1:
@@ -103,4 +104,6 @@ namespace SocialNetwork
 
 
     }
+
+   
 }

@@ -44,7 +44,17 @@ namespace SocialNetworkLib
 
             return friends;
         }
+        public List<Friendship> GetUserFriends(List<Friendship> RelationList, int IdUser)
+        {
+            if (RelationList != null)
+            {
+                Relations relations = new Relations(RelationList);
+                List<Friendship> UserFriends = relations.GetFriends(IdUser);
 
+                return UserFriends;
+            }
+            else throw new ArgumentNullException();
+        }
         public void IsRelation(int SenderId, int ReceiverId, string Name)
         {
             foreach (Friendship friend in RelationsList)
@@ -64,7 +74,5 @@ namespace SocialNetworkLib
                 }
             }
         }
-
-
     }
 }

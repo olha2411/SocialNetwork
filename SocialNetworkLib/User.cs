@@ -8,9 +8,17 @@ namespace SocialNetworkLib
 {
     public abstract class User
     {
+        private string name;
+        private int id;
+
         public int Id { get; set; }
 
         public string Name { get; set; }
+        public User()
+        {
+            name = Name;
+            id = Id;
+        }
         public virtual List<LoggedUser> ShowUsers(List<LoggedUser> RegisteredUsers, int LoggedUserId)
         {
             List<LoggedUser> Users = new List<LoggedUser>();
@@ -20,7 +28,6 @@ namespace SocialNetworkLib
                 Users.Add(new LoggedUser() { Id = U.Id, Name = U.Name });
 
             }
-
             return Users;
         }
     }
