@@ -16,14 +16,21 @@ namespace SocialNetworkLib
         {
             return RelationsStatus;
         }
+        public int GetSenderId()
+        {
+            return IdSender;
+        }
+        public int GetRecipientId()
+        {
+            return IdRecipient;
+        }
         public bool IsStatusFriends()
         {
             if (RelationsStatus == "friend")
             {
                 return true;
             }
-            else
-            {
+            else{                            
                 return false;
             }
         }

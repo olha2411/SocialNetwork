@@ -15,20 +15,22 @@ namespace SocialNetworkLib
         }
         public List<Friendship> HaveRelation(int UserId)
         {
-            List<Friendship> Friends = new List<Friendship>();
+            List<Friendship> RelationUsers = new List<Friendship>();
             foreach (Friendship friend in RelationsList)
             {
                 if (friend.IdSender == UserId | friend.IdRecipient == UserId)
                 {
-                    Friends.Add(new Friendship() { IdSender = friend.IdSender, IdRecipient = friend.IdRecipient, RelationsStatus = friend.RelationsStatus });
+                    RelationUsers.Add(new Friendship() { IdSender = friend.IdSender, IdRecipient = friend.IdRecipient, RelationsStatus = friend.RelationsStatus });
                 }
             }
-            return Friends;
+            return RelationUsers;
         }
 
-        public List<Friendship> GetFriends(int UserId)
+        public List<Friendship> GetFriends(int UserId, List<Friendship> RelationList)
         {
-            List<Friendship> UserFriends = HaveRelation(UserId);
+            if (RelationList != null)
+            {
+                List<Friendship> UserFriends = HaveRelation(UserId);           
             List<Friendship> friends = new List<Friendship>();
             foreach (Friendship f in UserFriends)
             {
@@ -41,36 +43,30 @@ namespace SocialNetworkLib
                     friends.Add(new Friendship() { IdRecipient = f.IdRecipient, RelationsStatus = f.RelationsStatus });
                 }
             }
-
-            return friends;
-        }
-        public List<Friendship> GetUserFriends(List<Friendship> RelationList, int IdUser)
-        {
-            if (RelationList != null)
-            {
-                Relations relations = new Relations(RelationList);
-                List<Friendship> UserFriends = relations.GetFriends(IdUser);
-
-                return UserFriends;
+                return friends;
             }
             else throw new ArgumentNullException();
+
+            
         }
-        public void IsRelation(int SenderId, int ReceiverId, string Name)
+       
+
+        public void GetRelationType(int SenderId, int ReceiverId, string Name)
         {
             foreach (Friendship friend in RelationsList)
             {
 
-                if (friend.IdRecipient == SenderId && friend.IdSender == ReceiverId && friend.RelationsStatus == "pending")
+                if (friend.IdRecipient == SenderId && friend.IdSender == ReceiverId && friend.GetStatusText() == "pending")
                 {
                     throw new WrongInvitationException($"{Name} has sent you invitation. You can accept it");
                 }
-                else if (friend.IdSender == SenderId && friend.IdRecipient == ReceiverId && friend.RelationsStatus == "friend")
+                else if (friend.IdSender == SenderId && friend.IdRecipient == ReceiverId && friend.GetStatusText() == "friend")
                 {
-                    throw new WrongInvitationException($"{Name} is already your friend");
+                    throw new WrongInvitationException($"You can't send invitation. {Name} is already your friend");
                 }
-                else if (friend.IdRecipient == ReceiverId && friend.IdSender == SenderId && friend.RelationsStatus == "pending")
+                else if (friend.IdRecipient == ReceiverId && friend.IdSender == SenderId && friend.GetStatusText() == "pending")
                 {
-                    throw new WrongInvitationException($"The invitation to {Name} is already sent");
+                    throw new WrongInvitationException($"You can't send invitation again. The invitation to {Name} is already sent");
                 }
             }
         }

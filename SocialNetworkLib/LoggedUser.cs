@@ -8,6 +8,7 @@ namespace SocialNetworkLib
 {
     public class LoggedUser : User
     {
+
         public override List<LoggedUser> ShowUsers(List<LoggedUser> RegisteredUsers, int LoggedUserId)
         {
             List<LoggedUser> Users = new List<LoggedUser>();
@@ -33,7 +34,7 @@ namespace SocialNetworkLib
                 if (user.Id == IdReciver)
                 {
                     Relations relations = new Relations(RelationList);
-                    relations.IsRelation(IdUser, IdReciver, user.Name);
+                    relations.GetRelationType(IdUser, IdReciver, user.Name);
                     exist = true;
                     RelationList.Add(new Friendship() { IdSender = IdUser, IdRecipient = IdReciver, RelationsStatus = "pending" });
                     Friend = user.Name;
@@ -48,7 +49,7 @@ namespace SocialNetworkLib
         }
 
 
-        public List<Friendship> GetUserInvitations(List<Friendship> RelationList, int IdLoggedUser)
+        public List<Friendship> GetUserInvitations(List<Friendship> RelationList, int LoggedUserId)
         {
 
             List<Friendship> UserInvitations = new List<Friendship>();
@@ -56,7 +57,7 @@ namespace SocialNetworkLib
             {
                 foreach (Friendship user in RelationList)
                 {
-                    if ((user.IdRecipient == IdLoggedUser && user.RelationsStatus != "declined" && user.IsStatusFriends() == false))// user.RelationsStatus != "friend"
+                    if ((user.IdRecipient == LoggedUserId && user.GetStatusText() != "declined" && user.IsStatusFriends() == false))// user.RelationsStatus != "friend"
                     {
                         UserInvitations.Add(new Friendship { IdSender = user.IdSender, RelationsStatus = "invitation to be friends" });
 
@@ -66,14 +67,12 @@ namespace SocialNetworkLib
 
             if (UserInvitations.Count != 0)
             {
-
                 return UserInvitations;
             }
             else
             {
                 throw new ArgumentException("You don't have invitations");
             }
-
         }
 
         public LoggedUser Accept(List<LoggedUser> RegisteredUsers, LoggedUser loggedUser, int SenderId, List<Friendship> RelationList)
@@ -85,7 +84,7 @@ namespace SocialNetworkLib
                 bool InvitationExist = false;
                 foreach (Friendship Inv in RelationList)
                 {
-                    if (SenderId == Inv.IdSender && loggedUser.Id == Inv.IdRecipient)
+                    if (SenderId == Inv.GetSenderId() && loggedUser.Id == Inv.GetRecipientId())
                     {
                         if (NewFriend != null)
                         {
@@ -107,11 +106,9 @@ namespace SocialNetworkLib
                 throw new ArgumentNullException();
             }
 
-
-
         }
 
-        public LoggedUser Decline(List<LoggedUser> RegisteredUsers, LoggedUser loggedUser, int SenderId, List<Friendship> RelationList)
+        public LoggedUser Decline(List<LoggedUser> RegisteredUsers, int SenderId, List<Friendship> RelationList, LoggedUser loggedUser)
         {
             LoggedUser PossibleFriend = new LoggedUser();
             bool InvitationExist = false;
@@ -157,7 +154,7 @@ namespace SocialNetworkLib
         {
             List<string> Friends = new List<string>();
             Relations friends = new Relations(RelationList);
-            List<Friendship> UserFriends = friends.GetUserFriends(RelationList, LoggedUser.Id);
+            List<Friendship> UserFriends = friends.GetFriends(LoggedUser.Id, RelationList);
             if (UserFriends.Count != 0)
             {
                 foreach (Friendship f in UserFriends)
@@ -165,12 +162,12 @@ namespace SocialNetworkLib
                     foreach (LoggedUser U in RegisteredUsers)
                     {
 
-                        if ((U.Id == f.IdSender | U.Id == f.IdRecipient) && f.RelationsStatus == "friend")
+                        if ((U.Id == f.IdSender | U.Id == f.IdRecipient) && f.GetStatusText() == "friend")
                         {
                             Friends.Add($"{U.Name} is your {f.RelationsStatus}");
 
                         }
-                        if (U.Id == f.IdRecipient && f.RelationsStatus == "pending")
+                        if (U.Id == f.IdRecipient && f.GetStatusText() == "pending")
                         {
                             Friends.Add($"Invitation to {U.Name} is  {f.RelationsStatus}");
                         }

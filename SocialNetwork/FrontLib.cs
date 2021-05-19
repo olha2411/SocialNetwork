@@ -12,7 +12,7 @@ namespace SocialNetwork
             List<LoggedUser> Users = loggedUser.ShowUsers(RegisteredUsers, loggedUser.Id);
             foreach (LoggedUser user in Users)
             {
-                Console.WriteLine($"{user.Id} \t {user.Name}");
+                Console.WriteLine($"\t {user.Name}");
             }
         }
         public static LoggedUser LogIn(LoggedUser LoggedUser, List<LoggedUser> RegisteredUsers)
@@ -67,9 +67,7 @@ namespace SocialNetwork
                 {
                     Console.WriteLine("Enter the name of user you want to send invitation:");
                     string name = Console.ReadLine();
-                    int ReceiverId = LoggedUser.GetId(RegisteredUsers, name);
-
-                    //int IdReceiver = int.Parse(Console.ReadLine());
+                    int ReceiverId = LoggedUser.GetId(RegisteredUsers, name);                    
                     if (ReceiverId != LoggedUser.Id)
                     {
                         string Friend = LoggedUser.AddFriend(RelationList, RegisteredUsers, LoggedUser.Id, ReceiverId);
@@ -130,11 +128,11 @@ namespace SocialNetwork
                 {
                     ConsoleColor color = Console.ForegroundColor;
                     Console.ForegroundColor = ConsoleColor.White;
-                    Console.WriteLine("\t 1. Accept invitation \n\t 2. Decline invitation \n\t 3. Go to Main Menu");
+                    Console.WriteLine("\t 1 - Accept invitation \n\t 2 - Decline invitation \n\t 3 - Go to Main Menu");
                     Console.WriteLine("Enter number of command:");
                     Console.ForegroundColor = color;
                     int command = int.Parse(Console.ReadLine());
-
+                    Console.WriteLine("");
                     switch (command)
                     {
                         case 1:
@@ -162,10 +160,10 @@ namespace SocialNetwork
                 ShowUserInvitations(loggeduser, RegisteredUsers, RelationList);
                 Console.WriteLine("Enter the name of user to accept his/her invitation:");
                 string name = Console.ReadLine();
-                int InvitationId = loggeduser.GetId(RegisteredUsers, name);
-                //int InvitationId = int.Parse(Console.ReadLine());
+                int InvitationId = loggeduser.GetId(RegisteredUsers, name);               
                 LoggedUser NewFriend = loggeduser.Accept(RegisteredUsers, loggeduser, InvitationId, RelationList);
                 Console.WriteLine($"{NewFriend.Name} is your new friend");
+                Console.WriteLine("");
             }
             catch (ArgumentException e)
             {
@@ -182,10 +180,10 @@ namespace SocialNetwork
                 ShowUserInvitations(loggeduser, RegisteredUsers, RelationList);
                 Console.WriteLine("Enter the name of user to decline invitation:");
                 string name = Console.ReadLine();
-                int InvitationId = loggeduser.GetId(RegisteredUsers, name);
-                //int InvitationId = int.Parse(Console.ReadLine());
-                LoggedUser Friend = loggeduser.Decline(RegisteredUsers, loggeduser, InvitationId, RelationList);
+                int InvitationId = loggeduser.GetId(RegisteredUsers, name);                
+                LoggedUser Friend = loggeduser.Decline(RegisteredUsers, InvitationId, RelationList, loggeduser);
                 Console.WriteLine($"You declined {Friend.Name}'s invitation to be your friend");
+                Console.WriteLine("");
             }
             catch (ArgumentException e)
             {

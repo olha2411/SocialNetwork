@@ -47,10 +47,10 @@ namespace SocialNetwork
             {
                 ConsoleColor color = Console.ForegroundColor;
                 Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine("");
-                Console.WriteLine("\t 1 - Show registered users \n\t 2 - Log in \n\t 3 - Show my friends \n\t 4 - Add friend(send invitation)");
-                Console.WriteLine("\t 5 - Show my invitations \n\t 6 - Process invitations \n\t 7 - Log out");
-                Console.WriteLine("\t 8 - Stop working in social network");
+                Console.WriteLine("\n\t MENU");
+                Console.WriteLine(" 1 - Show registered users \n 2 - Log in \n 3 - Show my friends \n 4 - Add friend(send invitation)");
+                Console.WriteLine(" 5 - Show my invitations \n 6 - Process invitations \n 7 - Log out");
+                Console.WriteLine(" 8 - Stop working in social network");
                 Console.WriteLine("");
                 Console.WriteLine("Enter number of command:");
                 Console.ForegroundColor = color;
