@@ -5,11 +5,11 @@ using SocialNetworkLib;
 
 namespace SocialNetwork
 {
-    public class FrontLib
-    {
-        public static void ShowUsers(List<LoggedUser> RegisteredUsers, LoggedUser loggedUser)
+   // public class FrontLib
+    //{
+       /* public static void ShowUsers(List<LoggedUser> RegisteredUsers, loggedUser loggedUser)
         {
-            List<LoggedUser> Users = loggedUser.ShowUsers(RegisteredUsers, loggedUser.Id);
+            List<LoggedUser> Users = loggedUser.ShowUsers(loggedUser.Id);
             foreach (LoggedUser user in Users)
             {
                 Console.WriteLine($"\t {user.Name}");
@@ -59,7 +59,7 @@ namespace SocialNetwork
                 Console.WriteLine("You are not logged in! Please, log in");
             }
         }
-        public static void SendInvitation(LoggedUser LoggedUser, List<Friendship> RelationList, List<LoggedUser> RegisteredUsers)
+        public static void SendInvitation(LoggedUserModel LoggedUser, List<Friendship> RelationList, List<LoggedUser> RegisteredUsers)
         {
             if (LoggedUser.Id != 0)
             {
@@ -67,16 +67,10 @@ namespace SocialNetwork
                 {
                     Console.WriteLine("Enter the name of user you want to send invitation:");
                     string name = Console.ReadLine();
-                    int ReceiverId = LoggedUser.GetId(RegisteredUsers, name);                    
-                    if (ReceiverId != LoggedUser.Id)
-                    {
-                        string Friend = LoggedUser.AddFriend(RelationList, RegisteredUsers, LoggedUser.Id, ReceiverId);
-                        Console.WriteLine($"You have sent invitation to {Friend}. Wait for answear)");
-                    }
-                    else
-                    {
-                        Console.WriteLine("You can't send invitation to yourself");
-                    }
+                                      
+                                            Console.WriteLine($"You have sent invitation to {Friend}. Wait for answear)");
+                   
+                   
                 }
                 catch (WrongInvitationException ex)
                 {
@@ -203,6 +197,6 @@ namespace SocialNetwork
                 Console.WriteLine("You are not logged in! Please, log in firstly");
             }
         }
-    }
+    }*/
     
 }

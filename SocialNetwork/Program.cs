@@ -4,44 +4,73 @@ using System.Collections.Generic;
 
 namespace SocialNetwork
 {
-    class Program : FrontLib
+    class Program 
     {
         static void Main(string[] args)
         {
 
-            List<LoggedUser> RegisteredUsers = new List<LoggedUser>()
+            List<LoggedUserModel> RegisteredUsers = new List<LoggedUserModel>()
             {
-            new LoggedUser() { Id = 1, Name = "Tom King" },
-            new LoggedUser() { Id = 2, Name = "Bill Wilson" },
-            new LoggedUser() { Id = 3, Name = "George Adamson" },
-            new LoggedUser() { Id = 4, Name = "Ann Harris" },
-            new LoggedUser() { Id = 5, Name = "Ken" },
-            new LoggedUser() { Id = 6, Name = "Emily Walker" },
-            new LoggedUser() { Id = 7, Name = "Lily Davies" },
-            new LoggedUser() { Id = 8, Name = "Harry Johnson" },
-            new LoggedUser() { Id = 9, Name = "Amelia Brown" },
+            new LoggedUserModel() { Id = 1, Name = "Tom King" },
+            new LoggedUserModel() { Id = 2, Name = "Bill Wilson" },
+            new LoggedUserModel() { Id = 3, Name = "George Adamson" },
+            new LoggedUserModel() { Id = 4, Name = "Ann Harris" },
+            new LoggedUserModel() { Id = 5, Name = "Ken" },
+            new LoggedUserModel() { Id = 6, Name = "Emily Walker" },
+            new LoggedUserModel() { Id = 7, Name = "Lily Davies" },
+            new LoggedUserModel() { Id = 8, Name = "Harry Johnson" },
+            new LoggedUserModel() { Id = 9, Name = "Amelia Brown" },
             };
 
-            List<Friendship> RelationList = new List<Friendship>()
+            List<RelationModel> RelationList = new List<RelationModel>()
             {
-                new Friendship(){ IdSender = 2, IdRecipient = 3, RelationsStatus = "friend"},
-                new Friendship(){ IdSender = 1, IdRecipient = 3, RelationsStatus = "friend"},
-                new Friendship(){ IdSender = 2, IdRecipient = 4, RelationsStatus = "friend"},
-                new Friendship(){ IdSender = 4, IdRecipient = 1, RelationsStatus = "friend"},
-                new Friendship(){ IdSender = 3, IdRecipient = 5, RelationsStatus = "pending"},
-                new Friendship(){ IdSender = 7, IdRecipient = 1, RelationsStatus = "pending"},
-                new Friendship(){ IdSender = 2, IdRecipient = 6, RelationsStatus = "friend"},
-                new Friendship(){ IdSender = 7, IdRecipient = 2, RelationsStatus = "pending"},
-                new Friendship(){ IdSender = 2, IdRecipient = 1, RelationsStatus = "pending"},
-                new Friendship(){ IdSender = 7, IdRecipient = 5, RelationsStatus = "friend"},
-                new Friendship(){ IdSender = 9, IdRecipient = 8, RelationsStatus = "pending"},
-                new Friendship(){ IdSender = 4, IdRecipient = 9, RelationsStatus = "friend"},
+                new RelationModel(){ IdSender = 2, IdRecipient = 3, RelationsStatus = "friend"},
+                new RelationModel(){ IdSender = 1, IdRecipient = 3, RelationsStatus = "friend"},
+                new RelationModel(){ IdSender = 2, IdRecipient = 4, RelationsStatus = "friend"},
+                new RelationModel(){ IdSender = 4, IdRecipient = 1, RelationsStatus = "friend"},
+                new RelationModel(){ IdSender = 3, IdRecipient = 5, RelationsStatus = "pending"},
+                new RelationModel(){ IdSender = 7, IdRecipient = 1, RelationsStatus = "pending"},
+                new RelationModel(){ IdSender = 2, IdRecipient = 6, RelationsStatus = "friend"},
+                new RelationModel(){ IdSender = 7, IdRecipient = 2, RelationsStatus = "pending"},
+                new RelationModel(){ IdSender = 2, IdRecipient = 1, RelationsStatus = "pending"},
+                new RelationModel(){ IdSender = 7, IdRecipient = 5, RelationsStatus = "friend"},
+                new RelationModel(){ IdSender = 9, IdRecipient = 8, RelationsStatus = "pending"},
+                new RelationModel(){ IdSender = 4, IdRecipient = 9, RelationsStatus = "friend"},
             };
+
+            List<GroupModel> Groups = new List<GroupModel>()
+            {
+                new GroupModel(11,1,"MusicFans"),
+                new GroupModel(22,7,"ArtFans"),
+                new GroupModel(33,2,"GamesFans"),
+                new GroupModel(44,5,"NatureFans"),
+
+            };
+
+            List<GroupRelationshipsModel> groupRelationships = new List<GroupRelationshipsModel>()
+            {
+                new GroupRelationshipsModel(11, 7, "member", 1),
+                new GroupRelationshipsModel(33, 4, "owner", 0),
+                new GroupRelationshipsModel(11, 9, "member", 7),
+                new GroupRelationshipsModel(22, 7, "owner", 0),
+                new GroupRelationshipsModel(22, 6, "member", 7),
+                new GroupRelationshipsModel(11, 1, "owner", 0),
+                new GroupRelationshipsModel(33, 8, "member", 4),
+                new GroupRelationshipsModel(44, 5, "owner", 0),
+                new GroupRelationshipsModel(44, 3, "member", 5),
+            };
+
+            LoggedUser registeredUsers = new LoggedUser(RegisteredUsers);
+            GroupRelationships GroupRelationship = new GroupRelationships(groupRelationships);
+            Group Group = new Group(Groups);
+            Relation relations = new Relation(RelationList);
+
 
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("\n Welcome to a SocialNetwork! \n\n Choose a command to start:");
-            LoggedUser LoggedUser = new LoggedUser() { Id = 0, Name = "Name" };
+            LoggedUserModel loggedUser = new LoggedUserModel() { Id = 0, Name = "Name" };
 
+            General general = new General(GroupRelationship, Group, loggedUser, registeredUsers, relations);
             bool alive = true;
             while (alive)
             {
@@ -65,26 +94,26 @@ namespace SocialNetwork
                     switch (command)
                     {
                         case 1:
-                            ShowUsers(RegisteredUsers, LoggedUser);
+                            ShowUsers(general, loggedUser);
                             break;
                         case 2:
-                            LoggedUser = LogIn(LoggedUser, RegisteredUsers);
+                            loggedUser = LogIn(loggedUser, general);
                             break;
                         case 3:
-                            ShowUserFriends(LoggedUser, RelationList, RegisteredUsers);
+                            ShowUserFriends(general, loggedUser);
                             break;
                         case 4:
-                            SendInvitation(LoggedUser, RelationList, RegisteredUsers);
+                            SendUserInvitation(general, loggedUser);
                             break;
                         case 5:
-                            ShowUserInvitations(LoggedUser, RegisteredUsers, RelationList);
+                            ShowUserInvitations(general, loggedUser);
                             break;
                         case 6:
-                            ProcessInvitation(RegisteredUsers, LoggedUser, RelationList);
+                            ProcessInvitation(general, loggedUser);
                             break;
-                        case 7:
+                       /* case 7:
                             Logout(LoggedUser);
-                            break;
+                            break;*/
                         case 8:
                             alive = false;
                             continue;
@@ -104,8 +133,168 @@ namespace SocialNetwork
 
             string g = Convert.ToBase64String(Guid.NewGuid().ToByteArray());
             Console.WriteLine(g);
-        }       
+        }
 
+        public static void ShowUsers(General general, LoggedUserModel loggedUser)
+        {
+            List<LoggedUserModel> Users = general.ShowAllUsers(loggedUser);
+            foreach (LoggedUserModel user in Users)
+            {
+                Console.WriteLine($"\t {user.Name}");
+            }
+        }
+       public static LoggedUserModel LogIn(LoggedUserModel loggedUser, General general)
+        {
+            if (loggedUser.Id == 0)
+            {
+                try
+                {
+                    Console.WriteLine("Enter your login:");
+                    int IdUser = int.Parse(Console.ReadLine());
+                    loggedUser = general.LogIn(IdUser);
+                    Console.WriteLine($"Hello {loggedUser.Name}!");
+                }
+                catch (ArgumentException e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+
+            }
+            else
+            {
+                Console.WriteLine("You are log in already! Choose another command");
+            }
+            return loggedUser;
+        }
+       public static void SendUserInvitation(General general, LoggedUserModel loggedUser)
+       {
+            if (loggedUser.Id != 0)
+            {
+                try
+                {
+                    Console.WriteLine("Enter the name of user you want to send invitation:");
+                    string name = Console.ReadLine();
+                    general.SendUserInvitation(loggedUser.Id, name);
+                    Console.WriteLine($"You have sent invitation to {name}. Wait for answear)");
+
+
+                }
+                catch (WrongInvitationException ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+
+            }
+            else
+            {
+                Console.WriteLine("You are not logged in! Please, log in");
+            }
+       }
+
+        public static void ShowUserFriends(General general, LoggedUserModel loggedUser)
+        {
+            if (loggedUser.Id != 0)
+            {
+
+                List<string> Friends = general.ShowUserFriend(loggedUser.Id);
+                foreach (string f in Friends)
+                {
+                    Console.WriteLine($"{f} is your  friend");
+                }
+
+            }
+            else
+            {
+                Console.WriteLine("You are not logged in! Please, log in");
+            }
+        }
+
+        public static void ShowUserInvitations(General general, LoggedUserModel loggedUser)
+        {
+            if (loggedUser.Id != 0)
+            {
+                List<string> UserInvitations = general.GetUserInvitations(loggedUser.Id);
+                try
+                {
+                    foreach (string inv in UserInvitations)
+                    {
+                        Console.WriteLine($"\t {inv} send you invitation to be friends");
+                    }
+                }
+                catch (ArgumentException ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
+        }
+        public static void ProcessInvitation(General general, LoggedUserModel loggedUser)
+        {
+            if (loggedUser.Id != 0)
+            {
+                bool alive = true;
+                while (alive)
+                {
+                    ConsoleColor color = Console.ForegroundColor;
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.WriteLine("\t 1 - Accept invitation \n\t 2 - Decline invitation \n\t 3 - Go to Main Menu");
+                    Console.WriteLine("Enter number of command:");
+                    Console.ForegroundColor = color;
+                    int command = int.Parse(Console.ReadLine());
+                    Console.WriteLine("");
+                    switch (command)
+                    {
+                        case 1:
+                            AcceptInvitation(general, loggedUser);
+                            break;
+                        case 2:
+                            DeclineInvitation(general, loggedUser);
+                            break;
+                        case 3:
+                            alive = false;
+                            continue;
+                    }
+                }
+            }
+            else
+            {
+                Console.WriteLine("You are not logged in! Please, log in");
+            }
+        }
+        public static void AcceptInvitation(General general, LoggedUserModel loggedUser)
+        {
+            try
+            {
+                Console.WriteLine("Your invitations");
+                ShowUserInvitations(general, loggedUser);
+                Console.WriteLine("Enter the name of user to accept his/her invitation:");
+                string name = Console.ReadLine();
+                string Name = general.AcceptUserInvitation(loggedUser, name);
+                Console.WriteLine($"{Name} is your new friend");
+                Console.WriteLine("");
+            }
+            catch (ArgumentException e)
+            {
+                Console.WriteLine("Error: " + e.Message);
+            }
+        }
+
+        public static void DeclineInvitation(General general, LoggedUserModel loggedUser)
+        {
+            try
+            {
+                Console.WriteLine("Your invitations");
+                ShowUserInvitations(general, loggedUser);
+                Console.WriteLine("Enter the name of user to accept his/her invitation:");
+                string name = Console.ReadLine();
+                string Name = general.DeclineUserInvitation(loggedUser, name);
+                Console.WriteLine($"You declined {Name}'s invitation to become friends");
+                Console.WriteLine("");
+            }
+            catch (ArgumentException e)
+            {
+                Console.WriteLine("Error: " + e.Message);
+            }
+        }
 
     }
 

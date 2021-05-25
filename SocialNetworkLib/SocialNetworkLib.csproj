@@ -42,7 +42,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Friendship.cs" />
+    <Compile Include="General.cs" />
+    <Compile Include="Group.cs" />
+    <Compile Include="GroupModel.cs" />
+    <Compile Include="GroupRelationships.cs" />
+    <Compile Include="GroupRelationshipsModel.cs" />
     <Compile Include="LoggedUser.cs" />
+    <Compile Include="LoggedUserModel.cs" />
+    <Compile Include="Relation.cs" />
+    <Compile Include="RelationModel.cs" />
     <Compile Include="Relations.cs" />
     <Compile Include="UnLoggedUser.cs" />
     <Compile Include="User.cs" />

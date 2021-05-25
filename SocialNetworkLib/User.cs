@@ -13,7 +13,7 @@ namespace SocialNetworkLib
         public string Name { get; set; }
         
 
-        public virtual List<LoggedUser> ShowUsers(List<LoggedUser> RegisteredUsers, int LoggedUserId)
+        /*public virtual List<LoggedUser> ShowUsers(List<LoggedUser> RegisteredUsers, int LoggedUserId)
         {
             List<LoggedUser> Users = new List<LoggedUser>();
 
@@ -23,6 +23,6 @@ namespace SocialNetworkLib
 
             }
             return Users;
-        }
+        }*/
     }
 }

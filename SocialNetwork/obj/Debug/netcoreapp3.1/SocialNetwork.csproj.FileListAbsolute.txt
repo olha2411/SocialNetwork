@@ -1,0 +1,16 @@
+D:\SocialNetwork\SocialNetwork\bin\Debug\netcoreapp3.1\SocialNetwork.exe
+D:\SocialNetwork\SocialNetwork\bin\Debug\netcoreapp3.1\SocialNetwork.deps.json
+D:\SocialNetwork\SocialNetwork\bin\Debug\netcoreapp3.1\SocialNetwork.runtimeconfig.json
+D:\SocialNetwork\SocialNetwork\bin\Debug\netcoreapp3.1\SocialNetwork.runtimeconfig.dev.json
+D:\SocialNetwork\SocialNetwork\bin\Debug\netcoreapp3.1\SocialNetwork.dll
+D:\SocialNetwork\SocialNetwork\bin\Debug\netcoreapp3.1\SocialNetwork.pdb
+D:\SocialNetwork\SocialNetwork\bin\Debug\netcoreapp3.1\SocialNetworkLib.dll
+D:\SocialNetwork\SocialNetwork\bin\Debug\netcoreapp3.1\SocialNetworkLib.pdb
+D:\SocialNetwork\SocialNetwork\obj\Debug\netcoreapp3.1\SocialNetwork.csprojAssemblyReference.cache
+D:\SocialNetwork\SocialNetwork\obj\Debug\netcoreapp3.1\SocialNetwork.AssemblyInfoInputs.cache
+D:\SocialNetwork\SocialNetwork\obj\Debug\netcoreapp3.1\SocialNetwork.AssemblyInfo.cs
+D:\SocialNetwork\SocialNetwork\obj\Debug\netcoreapp3.1\SocialNetwork.csproj.CoreCompileInputs.cache
+D:\SocialNetwork\SocialNetwork\obj\Debug\netcoreapp3.1\SocialNetwork.csproj.CopyComplete
+D:\SocialNetwork\SocialNetwork\obj\Debug\netcoreapp3.1\SocialNetwork.dll
+D:\SocialNetwork\SocialNetwork\obj\Debug\netcoreapp3.1\SocialNetwork.pdb
+D:\SocialNetwork\SocialNetwork\obj\Debug\netcoreapp3.1\SocialNetwork.genruntimeconfig.cache
