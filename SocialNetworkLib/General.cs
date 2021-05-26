@@ -66,7 +66,15 @@ namespace SocialNetworkLib
             {
                 InvitationSenders.Add(RegisteredUsers.GetUserName(I));
             }
-            return InvitationSenders;
+            if(InvitationSenders.Count != 0)
+            {
+                return InvitationSenders;
+            }
+            else
+            {
+                throw new Exception("You don't have invitations");
+            }
+           
         }
         
 
@@ -191,6 +199,25 @@ namespace SocialNetworkLib
             List<string> groups = new List<string>();
                 groups = group.GetAllGroups();
             return groups;
+        }
+
+        public List<string> GetUserGroups(int UserId)
+        {
+            List<string> Usergroups = new List<string>();
+            List<int> groups = GroupRelationship.GetUserGroups(UserId);
+            if(groups.Count != 0)
+            {
+                foreach (int item in groups)
+                {
+                    Usergroups.Add(group.GetGroupName(item));
+                }
+                return Usergroups;
+            }
+            else
+            {
+                throw new Exception("You are not member of any group");
+            }
+            
         }
     }
 }

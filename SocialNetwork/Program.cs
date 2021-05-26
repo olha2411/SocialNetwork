@@ -8,7 +8,7 @@ namespace SocialNetwork
     {
         static void Main(string[] args)
         {
-
+            
             List<LoggedUserModel> RegisteredUsers = new List<LoggedUserModel>()
             {
             new LoggedUserModel() { Id = 1, Name = "Tom King" },
@@ -81,8 +81,8 @@ namespace SocialNetwork
                 Console.WriteLine(" 1 - Show registered users \n 2 - Log in \n 3 - Show my friends \n 4 - Add friend(send invitation)");
                 Console.WriteLine(" 5 - Show my invitations \n 6 - Process invitations \n 7 - Send Invitation to User to join Group");
                 Console.WriteLine(" 8 - Accept Group Invitation  \n 9 - Decline Group Invitation");
-                Console.WriteLine(" 10 - GetGroupParticipants \n 11 - Show Groups");
-                Console.WriteLine(" 12 - Log out  \n 13 - Stop working in social network");
+                Console.WriteLine(" 10 - GetGroupParticipants \n 11 - Show Existing Groups \n 12 - Show my groups");
+                Console.WriteLine(" 13 - Log out  \n 14 - Stop working in social network");
                 Console.WriteLine("");
                 Console.WriteLine("Enter number of command:");
                 Console.ForegroundColor = color;
@@ -90,7 +90,7 @@ namespace SocialNetwork
                 {
                     int command = int.Parse(Console.ReadLine());
                     Console.WriteLine("");
-                    if(command > 13 | command < 1)
+                    if(command > 14 | command < 1)
                     {
                         Console.WriteLine("There is no such command");
                     }
@@ -126,13 +126,16 @@ namespace SocialNetwork
                         case 10:
                             GetGroupParticipants(general, loggedUser);
                             break;
-                        case 12:
+                        case 13:
                              LogOut(general, loggedUser);  
                             break;
                         case 11:
                            GetAllGroups(general, loggedUser);
                             break;
-                        case 13:
+                        case 12:
+                            GetUserGroup(general, loggedUser);
+                            break;
+                        case 14:
                             alive = false;
                             continue;
 
@@ -147,10 +150,7 @@ namespace SocialNetwork
                     Console.ForegroundColor = color;
                 }
             }
-
-
-            string g = Convert.ToBase64String(Guid.NewGuid().ToByteArray());
-            Console.WriteLine(g);
+            
         }
 
         public static void ShowUsers(General general, LoggedUserModel loggedUser)
@@ -435,13 +435,23 @@ namespace SocialNetwork
         }
         public static void GetUserGroup(General general, LoggedUserModel loggedUser)
         {
+            if (loggedUser.Id != 0)
+            {
+                
+                List<string> groups = general.GetUserGroups(loggedUser.Id);
+                Console.WriteLine("You are member of groups:");
+                foreach (string item in groups)
+                {
+                    Console.WriteLine(item);
+                }
+            }
+            else
+            {
+                Console.WriteLine("You are not logged in! Please, log in");
+            }
 
         }
-
-        public static void AddNewGroup(General general, LoggedUserModel loggedUser)
-        {
-
-        }
+        
     }
 
    

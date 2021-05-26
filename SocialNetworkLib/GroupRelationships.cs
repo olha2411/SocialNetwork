@@ -125,6 +125,15 @@ namespace SocialNetworkLib
             GroupRelationship.Remove(new GroupRelationshipsModel(user.GroupId, user.UserId, user.Role, user.SenderId));
 
         }
-
+        public List<int> GetUserGroups(int UserId)
+        {
+            List<int> group = new List<int>();
+            foreach (GroupRelationshipsModel G in GroupRelationship)
+            {
+                if (G.UserId == UserId)
+                    group.Add(G.GroupId);
+            }
+            return group;
+        }
     }
 }

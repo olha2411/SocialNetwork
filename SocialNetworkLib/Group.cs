@@ -85,6 +85,7 @@ namespace SocialNetworkLib
             }
             return Name;
         }
+
         public List<string> GetAllGroups()
         {
             List<string> group = new List<string>();
@@ -94,5 +95,6 @@ namespace SocialNetworkLib
             }
             return group;
         }
+        
     }
 }
