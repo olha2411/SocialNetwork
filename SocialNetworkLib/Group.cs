@@ -59,5 +59,40 @@ namespace SocialNetworkLib
             }
             return exist;
         }
+
+        public int GetGroupId(string GroupName)
+        {
+            int Id = 0;
+            foreach(GroupModel G in groups)
+            {
+                if(G.GroupName == GroupName)
+                {
+                    Id = G.GroupId;
+                }
+            }
+            return Id;
+        }
+
+        public string GetGroupName(int GroupId)
+        {
+            string Name = "";
+            foreach (GroupModel G in groups)
+            {
+                if (G.GroupId == GroupId)
+                {
+                    Name = G.GroupName;
+                }
+            }
+            return Name;
+        }
+        public List<string> GetAllGroups()
+        {
+            List<string> group = new List<string>();
+            foreach(GroupModel G in groups)
+            {
+                group.Add(G.GroupName);
+            }
+            return group;
+        }
     }
 }

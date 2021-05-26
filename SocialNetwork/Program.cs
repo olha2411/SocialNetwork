@@ -58,6 +58,7 @@ namespace SocialNetwork
                 new GroupRelationshipsModel(33, 8, "member", 4),
                 new GroupRelationshipsModel(44, 5, "owner", 0),
                 new GroupRelationshipsModel(44, 3, "member", 5),
+                new GroupRelationshipsModel(44, 1, "0", 5),
             };
 
             LoggedUser registeredUsers = new LoggedUser(RegisteredUsers);
@@ -66,7 +67,7 @@ namespace SocialNetwork
             Relation relations = new Relation(RelationList);
 
 
-            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine("\n Welcome to a SocialNetwork! \n\n Choose a command to start:");
             LoggedUserModel loggedUser = new LoggedUserModel() { Id = 0, Name = "Name" };
 
@@ -78,8 +79,10 @@ namespace SocialNetwork
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine("\n\t MENU");
                 Console.WriteLine(" 1 - Show registered users \n 2 - Log in \n 3 - Show my friends \n 4 - Add friend(send invitation)");
-                Console.WriteLine(" 5 - Show my invitations \n 6 - Process invitations \n 7 - Log out");
-                Console.WriteLine(" 8 - Stop working in social network");
+                Console.WriteLine(" 5 - Show my invitations \n 6 - Process invitations \n 7 - Send Invitation to User to join Group");
+                Console.WriteLine(" 8 - Accept Group Invitation  \n 9 - Decline Group Invitation");
+                Console.WriteLine(" 10 - GetGroupParticipants \n 11 - Show Groups");
+                Console.WriteLine(" 12 - Log out  \n 13 - Stop working in social network");
                 Console.WriteLine("");
                 Console.WriteLine("Enter number of command:");
                 Console.ForegroundColor = color;
@@ -87,7 +90,7 @@ namespace SocialNetwork
                 {
                     int command = int.Parse(Console.ReadLine());
                     Console.WriteLine("");
-                    if(command > 8 | command < 1)
+                    if(command > 13 | command < 1)
                     {
                         Console.WriteLine("There is no such command");
                     }
@@ -111,10 +114,25 @@ namespace SocialNetwork
                         case 6:
                             ProcessInvitation(general, loggedUser);
                             break;
-                       /* case 7:
-                            Logout(LoggedUser);
-                            break;*/
+                        case 7:
+                            SendInvitationToGroup(general, loggedUser);
+                            break;
                         case 8:
+                            AcceptGroupInvitation(general, loggedUser);  
+                            break;
+                        case 9:
+                            DeclineGroupInvitation(general, loggedUser);
+                            break;
+                        case 10:
+                            GetGroupParticipants(general, loggedUser);
+                            break;
+                        case 12:
+                             LogOut(general, loggedUser);  
+                            break;
+                        case 11:
+                           GetAllGroups(general, loggedUser);
+                            break;
+                        case 13:
                             alive = false;
                             continue;
 
@@ -226,6 +244,10 @@ namespace SocialNetwork
                     Console.WriteLine(ex.Message);
                 }
             }
+            else
+            {
+                Console.WriteLine("You are not logged in! Please, log in");
+            }
         }
         public static void ProcessInvitation(General general, LoggedUserModel loggedUser)
         {
@@ -295,7 +317,131 @@ namespace SocialNetwork
                 Console.WriteLine("Error: " + e.Message);
             }
         }
+        public static void LogOut(General general, LoggedUserModel loggedUser)
+        {
+            loggedUser =  general.LogOut(loggedUser);
+        }
 
+        public static void SendInvitationToGroup(General general, LoggedUserModel loggedUser)
+        {
+            if (loggedUser.Id != 0)
+            {
+                Console.WriteLine("Enter the name of group you want to add member to:");
+                string GroupName = Console.ReadLine();
+                Console.WriteLine("Enter the name of user to send  invitation:");
+                string UserName = Console.ReadLine();
+                general.AddUserToGroup(UserName, GroupName, loggedUser);
+                Console.WriteLine($"You've sent invitation to {UserName} to join {GroupName} group");
+            }
+            else
+            {
+                Console.WriteLine("You are not logged in! Please, log in");
+            }
+
+        }
+
+
+        public static void AcceptGroupInvitation(General general, LoggedUserModel loggedUser)
+        {
+            if (loggedUser.Id != 0)
+            { 
+                Dictionary<string, string> sender = general.GetGroupInvitations(loggedUser.Id);
+                if (sender.Count == 0)
+                {
+                    Console.WriteLine("You don't have invitations");
+                }
+                else
+                {
+                    foreach (KeyValuePair<string, string> keyValue in sender)
+                {
+                    Console.WriteLine(keyValue.Key + " send invitation to join " + keyValue.Value);
+                }
+                
+                
+                    Console.WriteLine("Enter the name of group you want join to:");
+                    string GroupName = Console.ReadLine();
+                    general.Accept(GroupName, loggedUser.Id);
+                    Console.WriteLine($"You've joined {GroupName} group");
+                }
+                
+            }
+            else
+            {
+                Console.WriteLine("You are not logged in! Please, log in");
+            }
+}
+
+        public static void DeclineGroupInvitation(General general, LoggedUserModel loggedUser)
+        {
+            if (loggedUser.Id != 0)
+            {
+                Dictionary<string, string> sender = general.GetGroupInvitations(loggedUser.Id);
+                if (sender.Count == 0)
+                {
+                    Console.WriteLine("You don't have invitations");
+                }
+                else
+                {
+
+                    foreach (KeyValuePair<string, string> keyValue in sender)
+                    {
+                        Console.WriteLine(keyValue.Key + "send invitation to join" + keyValue.Value);
+                    }
+                    Console.WriteLine("Enter the name of group you want join to:");
+                    string GroupName = Console.ReadLine();
+                    general.DeclineInvitation(GroupName, loggedUser.Id);
+                    Console.WriteLine($"You've declined invitation to join {GroupName} group");
+                }
+            }
+            else
+            {
+                Console.WriteLine("You are not logged in! Please, log in");
+            }
+        }
+
+        public static void GetGroupParticipants(General general, LoggedUserModel loggedUser)
+        {
+            if (loggedUser.Id != 0)
+            {
+                Console.WriteLine("Enter the name of group you want to see participants:");
+                string GroupName = Console.ReadLine();
+                Console.WriteLine();
+                List<string> participants = general.GetGroupParticipants(GroupName);
+                foreach(string G in participants)
+                {
+                    Console.WriteLine(G);
+                }
+            }
+            else
+            {
+                Console.WriteLine("You are not logged in! Please, log in");
+            }
+        }
+        public static void  GetAllGroups(General general, LoggedUserModel loggedUser)
+        {
+            if (loggedUser.Id != 0)
+            {
+                List<string> groups = general.GetExistingGroups();
+                foreach(string item in groups)
+                {
+                    Console.WriteLine(item);
+                }
+            }
+            else
+            {
+                Console.WriteLine("You are not logged in! Please, log in");
+            }
+
+        }
+        public static void GetUserGroup(General general, LoggedUserModel loggedUser)
+        {
+
+        }
+
+        public static void AddNewGroup(General general, LoggedUserModel loggedUser)
+        {
+
+        }
     }
 
    

@@ -21,8 +21,7 @@ namespace SocialNetworkLib
             List<RelationModel> Friends = new List<RelationModel>();
             foreach(RelationModel relation in relations)
             {
-                //if((relation.IdSender == UserId || relation.IdRecipient == UserId) && relation.RelationsStatus == "friend")
-                //{
+              
                     if(relation.IdSender == UserId && relation.RelationsStatus == "friend")
                     {
                         Friends.Add(new RelationModel { IdSender = relation.IdRecipient, RelationsStatus = "friend" });
@@ -32,7 +31,7 @@ namespace SocialNetworkLib
                         Friends.Add(new RelationModel { IdSender = relation.IdSender, RelationsStatus = "friend" });
                     }
                     
-               // }
+               
             }
             return Friends;
         }

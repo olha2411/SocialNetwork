@@ -58,7 +58,18 @@ namespace SocialNetworkLib
             }
             return Is;
         }
-
+        public bool HasInvitation(int UserId, int GroupId)
+        {
+            bool Is = false;
+            foreach (GroupRelationshipsModel G in GroupRelationship)
+            {
+                if (G.UserId == UserId && G.GroupId == GroupId && G.Role == "0")
+                {
+                    Is = true;
+                }
+            }
+            return Is;
+        }
         public void SendGroupInvitation(int UserId, int GroupId, int LoggedUserId)
         {
             GroupRelationship.Add(new GroupRelationshipsModel(GroupId, UserId, "0", LoggedUserId));
@@ -73,6 +84,32 @@ namespace SocialNetworkLib
                     G.Role = "member";
                 }
             }
+        }
+          
+        public bool InvitationExist(int UserId, int GroupId)
+        {
+            bool exist = false;
+            foreach(GroupRelationshipsModel G in GroupRelationship)
+            {
+                if(G.GroupId == GroupId && G.UserId == UserId && G.Role == "0")
+                {
+                    exist = true;
+                }
+            }
+            return exist;
+        }
+
+        public Dictionary<int, int> GetUserGroupInvitations(int UserId)
+        {
+            Dictionary<int, int> invitations = new Dictionary<int, int>();            
+            foreach (GroupRelationshipsModel G in GroupRelationship)
+            {
+                if (G.Role == "0" && G.UserId == UserId)
+                {
+                    invitations.Add(G.SenderId, G.GroupId);
+                }
+            }
+            return invitations;
         }
 
         public void DeclineGroupInvitation(int GroupId, int UserId)

@@ -86,7 +86,12 @@ namespace SocialNetworkLib
             }
             return UserId;
         }
-
+        public LoggedUserModel LogOut(LoggedUserModel loggedUser)
+        {
+            loggedUser.Id = 0;
+            loggedUser.Name = "NoName";
+            return loggedUser;
+        }
     }
 
 
