@@ -14,18 +14,7 @@ namespace SocialNetworkLib
         {
             groups = Groups;
         }
-        public int GetOwnerId(int GroupId)
-        {
-            int OwnerId = 0;
-            foreach (GroupModel Id in groups)
-            {
-                if (Id.GroupId == GroupId)
-                {
-                    OwnerId = Id.OwnerId;
-                }
-            }
-            return OwnerId;
-        }
+       
         public void AddGroup(int OwnerId, string Name, int IdGroup)
         {
             groups.Add(new GroupModel(IdGroup, OwnerId, Name));
