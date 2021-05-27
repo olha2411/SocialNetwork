@@ -89,9 +89,9 @@ namespace SocialNetworkLib
 
         public string DeclineUserInvitation(LoggedUserModel loggedUser, string SenderName)
         {
-            string Name = "";
+            //string Name = "";
             int SenderId = Relation.DeclineInvitation(SenderName, loggedUser.Id, RegisteredUsers);
-            Name = RegisteredUsers.GetUserName(SenderId);
+            string Name = RegisteredUsers.GetUserName(SenderId);
             return Name; ;
         }
                
@@ -196,8 +196,7 @@ namespace SocialNetworkLib
         }       
         public List<string> GetExistingGroups()
         {
-            List<string> groups = new List<string>();
-                groups = group.GetAllGroups();
+            List<string> groups = group.GetAllGroups();
             return groups;
         }
 

@@ -30,10 +30,7 @@ namespace SocialNetworkLib
         {
             groups.Add(new GroupModel(IdGroup, OwnerId, Name));
         }
-        public void DeleteGroup(int GroupId)                            //недороблено
-        {
-            groups.Remove(new GroupModel());
-        }
+        
         public int GetOwner(int GroupId, int LoggedUserId)
         {
             LoggedUserModel Owner  = new LoggedUserModel();

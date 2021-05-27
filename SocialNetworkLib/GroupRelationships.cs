@@ -20,19 +20,7 @@ namespace SocialNetworkLib
 
         }
 
-        public List<GroupRelationshipsModel> GetUserGroup(int UserId)
-        {
-            List<GroupRelationshipsModel> UserGroups = new List<GroupRelationshipsModel>();
-            foreach (GroupRelationshipsModel G in GroupRelationship)
-            {
-                if (G.UserId == UserId)
-                {
-                    UserGroups.Add(new GroupRelationshipsModel(G.GroupId, UserId, G.Role, G.SenderId));
-                }
-            }
-            return UserGroups;
-        }
-
+        
         public List<GroupRelationshipsModel> GetGroupParticipants(int GroupId)
         {
             List<GroupRelationshipsModel> participants = new List<GroupRelationshipsModel>();

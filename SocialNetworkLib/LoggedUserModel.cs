@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace SocialNetworkLib
 {
     public class LoggedUserModel:User
-    {
-
+    {        
+       
     }
 }
