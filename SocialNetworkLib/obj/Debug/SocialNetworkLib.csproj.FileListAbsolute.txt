@@ -1,6 +1,6 @@
 D:\SocialNetwork\SocialNetworkLib\bin\Debug\SocialNetworkLib.dll
 D:\SocialNetwork\SocialNetworkLib\bin\Debug\SocialNetworkLib.pdb
+D:\SocialNetwork\SocialNetworkLib\obj\Debug\SocialNetworkLib.csprojAssemblyReference.cache
 D:\SocialNetwork\SocialNetworkLib\obj\Debug\SocialNetworkLib.csproj.CoreCompileInputs.cache
 D:\SocialNetwork\SocialNetworkLib\obj\Debug\SocialNetworkLib.dll
 D:\SocialNetwork\SocialNetworkLib\obj\Debug\SocialNetworkLib.pdb
-D:\SocialNetwork\SocialNetworkLib\obj\Debug\SocialNetworkLib.csprojAssemblyReference.cache
